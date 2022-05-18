@@ -3,28 +3,28 @@ services:
   - docker
 
 before_install:
-  - docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t rayudubk/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run stephengrider/react-test npm test -- --coverage
+  - docker run rayudubk/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t stephengrider/multi-client ./client
-  - docker build -t stephengrider/multi-nginx ./nginx
-  - docker build -t stephengrider/multi-server ./server
-  - docker build -t stephengrider/multi-worker ./worker
+  - docker build -t rayudubk/multi-client ./client
+  - docker build -t rayudubk/multi-nginx ./nginx
+  - docker build -t rayudubk/multi-server ./server
+  - docker build -t rayudubk/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push stephengrider/multi-client
-  - docker push stephengrider/multi-nginx
-  - docker push stephengrider/multi-server
-  - docker push stephengrider/multi-worker
+  - docker push rayudubkrayudubkrayudubkrayudubk/multi-client
+  - docker push rayudubkrayudubkrayudubk/multi-nginx
+  - docker push rayudubkrayudubk/multi-server
+  - docker push rayudubk/multi-worker
 
 deploy:
   provider: elasticbeanstalk
   region: us-west-1
-  app: multi-docker
+  app: multi-container-docker
   env: MultiDocker-env
   bucket_name: elasticbeanstalk-us-west-1-306476627547
   bucket_path: docker-multi
